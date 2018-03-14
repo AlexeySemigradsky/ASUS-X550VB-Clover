@@ -10446,6 +10446,16 @@ DefinitionBlock ("", "DSDT", 2, "_ASUS_", "Notebook", 0x00000013)
                 {
                     Store (Arg1, ECFL)
                 }
+                If (LAnd (LEqual (Arg0, 3), LEqual (Arg1, 1)))
+                {
+                    ^^^LPCB.EC0.WRAM (0x0520, 0x95)
+                    ^^^LPCB.EC0.WRAM (0x03A4, Zero)
+                    ^^^LPCB.EC0.WRAM (0x03A5, Zero)
+                    Store (^^^LPCB.EC0.RRAM (0x0521), Local0)
+                    And (Local0, 0xEF, Local0)
+                    Or (Local0, 0x20, Local0)
+                    ^^^LPCB.EC0.WRAM (0x0521, Local0)
+                }
             }
         }
     }
@@ -20976,14 +20986,6 @@ DefinitionBlock ("", "DSDT", 2, "_ASUS_", "Notebook", 0x00000013)
             {
                 Return (Zero)
             }
-
-            ^^^LPCB.EC0.WRAM (0x0520, 0x95)
-            ^^^LPCB.EC0.WRAM (0x03A4, Zero)
-            ^^^LPCB.EC0.WRAM (0x03A5, Zero)
-            Store (^^^LPCB.EC0.RRAM (0x0521), Local0)
-            And (Local0, 0xEF, Local0)
-            Or (Local0, 0x20, Local0)
-            ^^^LPCB.EC0.WRAM (0x0521, Local0)
             ^^^GFX0.SAVO ()
             Store (One, LNKD)
             While (LNotEqual (LNKS, Zero))
@@ -21107,6 +21109,7 @@ DefinitionBlock ("", "DSDT", 2, "_ASUS_", "Notebook", 0x00000013)
                 Store (Zero, NHDA)
                 Sleep (0x32)
             }
+            _OFF ()
         }
 
         Method (_DOS, 1, NotSerialized)  // _DOS: Disable Output Switching
